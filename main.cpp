@@ -82,7 +82,7 @@ class EventNode{//Linked List Node
     EventNode * next;
     EventNode( Event *n):next(NULL),element(n){};	// constructor
     ~EventNode(){
-        delete element; //delete only data pointer to protect next list
+        delete element; //delete only data pointer to protect next list for line 275
     }
 };
 
@@ -93,9 +93,8 @@ class Calendar{   //Container Classs
 public:
     Calendar(): head(NULL) {}
     Event *addEvent(int eventType,int year,int month,int day, int hour,int min);
-    ~Calendar(){
-        delete head;
-    }
+    ~Calendar();
+
     void deleteEvent(int id);
     void listEvents();
     void filterEvents(int year, int month);
@@ -251,10 +250,10 @@ Event *Calendar::addEvent(int eventType, int year, int month, int day, int hour,
 void Calendar::deleteEvent(int id) {
     if(id>Event::IdCounter)
         return;
-    if (head==0)
+    if (head==NULL)
         return;
     EventNode *temp=head;
-    EventNode *DeletedNode=0;
+    EventNode *DeletedNode=NULL;
     if (id==1){
         head=temp->next;
         delete temp;
@@ -285,11 +284,19 @@ void Calendar::listEvents() {
 }
 //Filter Method
 void Calendar::filterEvents(int year, int month) {
-    EventNode *Curr=head;
-    while (Curr){
-        if(Curr->element->getYear()==year && Curr->element->getMonth()==month){ //if mount and year is equal to arg, print its functions
-            Curr->element->print();
+    EventNode *curr=head;
+    while (curr){
+        if(curr->element->getYear()==year && curr->element->getMonth()==month){ //if mount and year is equal to arg, print its functions
+            curr->element->print();
         }
-        Curr=Curr->next;
+        curr=curr->next;
     }
+}
+Calendar::~Calendar(){  //remove every node separately
+        EventNode *temp;
+        while(head){        // if the list is not empty
+            temp=head;
+            head=head->next;
+            delete temp;
+        }
 }
