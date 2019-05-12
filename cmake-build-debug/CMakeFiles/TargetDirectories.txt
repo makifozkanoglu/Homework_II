@@ -1,0 +1,3 @@
+/home/akif/Projects/CLionProjects/HomeworkII/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/home/akif/Projects/CLionProjects/HomeworkII/cmake-build-debug/CMakeFiles/Homework_II.dir
+/home/akif/Projects/CLionProjects/HomeworkII/cmake-build-debug/CMakeFiles/edit_cache.dir
