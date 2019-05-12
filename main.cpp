@@ -1,6 +1,17 @@
 #include <iostream>
 using namespace std;
 
+class Error{               // Objects to be thrown
+private:
+    const string error;
+public:
+    Error(const string & error):error(error){}
+    void print() const{
+        cout<<error<<endl;
+    }
+};
+
+
 class Event { //Base Event Classs-Abstract Class
 private:
     int year,month,day,hour,min,id;
@@ -136,6 +147,29 @@ int main() {
 
     cout<<endl<<"Filtering 12/2018"<<endl<<endl;
     My_Cal.filterEvents(2018,12);
+
+    cout<<endl<<"***Exceptions"<<endl;
+    try{
+        My_Cal.filterEvents(2016,12);
+    }
+    catch (const Error &error){
+        error.print();
+    }
+    try{
+        My_Cal.deleteEvent(6);
+    }
+    catch (const Error &error){
+        error.print();
+    }
+    try{
+        for (int i=4;i>0;i--){
+            My_Cal.deleteEvent(i);
+        }
+        My_Cal.listEvents();
+    }
+    catch (const Error &error){
+        error.print();
+    }
 }
 
 //Event Set Functions
@@ -248,10 +282,10 @@ Event *Calendar::addEvent(int eventType, int year, int month, int day, int hour,
 
 
 void Calendar::deleteEvent(int id) {
-    if(id>Event::IdCounter)
-        return;
     if (head==NULL)
-        return;
+        throw Error("Calendar is empty!");
+    if(id>Event::IdCounter || id<1)
+        throw Error("Event Not Found!"); //Exception
     EventNode *temp=head;
     EventNode *DeletedNode=NULL;
     if (id==1){
@@ -275,7 +309,8 @@ void Calendar::deleteEvent(int id) {
 }
 
 void Calendar::listEvents() {
-    if(head==NULL) cout<<"Empty List"<<endl;
+    if (head==NULL)
+        throw Error("Calendar is empty!");
     EventNode *Curr=head;
     while(Curr){ //till the last list, it prints every node data
         Curr->element->print();
@@ -285,12 +320,16 @@ void Calendar::listEvents() {
 //Filter Method
 void Calendar::filterEvents(int year, int month) {
     EventNode *curr=head;
+    bool IsMatched= false;
     while (curr){
         if(curr->element->getYear()==year && curr->element->getMonth()==month){ //if mount and year is equal to arg, print its functions
             curr->element->print();
+            IsMatched= true;
         }
         curr=curr->next;
     }
+    if (!IsMatched)
+        throw Error("No Matching Event!");
 }
 Calendar::~Calendar(){  //remove every node separately
         EventNode *temp;
