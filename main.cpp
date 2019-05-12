@@ -150,22 +150,22 @@ int main() {
 
     cout<<endl<<"***Exceptions"<<endl;
     try{
-        My_Cal.filterEvents(2016,12);
+        My_Cal.filterEvents(2016,12);//There is not any event in 2016, throw "NoMatchingEvent"
     }
     catch (const Error &error){
         error.print();
     }
     try{
-        My_Cal.deleteEvent(6);
+        My_Cal.deleteEvent(6); // There is not any event whose id is 6, throwing "NotFound"
     }
     catch (const Error &error){
         error.print();
     }
     try{
         for (int i=4;i>0;i--){
-            My_Cal.deleteEvent(i);
+            My_Cal.deleteEvent(i); //Deleting all events
         }
-        My_Cal.listEvents();
+        My_Cal.listEvents();  //Throwing "empty"
     }
     catch (const Error &error){
         error.print();
