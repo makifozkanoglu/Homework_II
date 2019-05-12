@@ -6,7 +6,7 @@ Calendar Project is a simple implementation on C++ including inheritance, polymo
 
 ## Installation
 
-This projected is constructed by CLion Ide in Ubuntu 16.04 , so it can be imported by selecting CMakeLists.txt
+This projected is constructed by CLion IDE in Ubuntu 16.04 , so it can be imported by selecting CMakeLists.txt
 
 ## Author
 
